@@ -5,7 +5,7 @@ Implementation developed at [my fourier notebook](https://nbviewer.org/github/un
 ```rust
 use sfft::*;
 
-let v = fft([re(0f32), re(1.), re(2.), re(3.)]);
+let v = fft(&[re(0f32), re(1.), re(2.), re(3.)]);
 
 assert_eq!(
     v,

@@ -5,7 +5,7 @@
 //! ```rust
 //! use sfft::*;
 //!
-//! let v = fft([re(0f32), re(1.), re(2.), re(3.)]);
+//! let v = fft(&[re(0f32), re(1.), re(2.), re(3.)]);
 //!
 //! assert_eq!(
 //!     v,
@@ -46,9 +46,9 @@ pub unsafe fn unsafe_fft<const LEN: usize>(
     o
 }
 
-pub fn fft<const LEN: usize>(x: [Complex<f32>; LEN]) -> [Complex<f32>; LEN] {
+pub fn fft<const LEN: usize>(x: &[Complex<f32>; LEN]) -> [Complex<f32>; LEN] {
     assert_eq!(LEN & (LEN - 1), 0);
-    let mut ret = x;
+    let mut ret = *x;
     unsafe { unsafe_fft::<LEN>(x.as_ptr(), ret.as_mut_ptr(), LEN, 1) };
     ret
 }
@@ -60,7 +60,7 @@ mod tests {
         use crate::*;
 
         let a = [re(0f32), re(1.), re(2.), re(3.)];
-        let b = fft(a);
+        let b = fft(&a);
 
         assert_eq!(
             b,
